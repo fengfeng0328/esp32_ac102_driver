@@ -12,8 +12,24 @@
 
 void app_main()
 {
-	AC102_DRV_INIT_44100HZ_16BIT_2CHANNEL();
-	AC102_START();
+	esp_err_t ret = AC102_DRV_INIT_44100HZ_16BIT_2CHANNEL();
+	if (ESP_OK == ret) {
+		printf("AC102_DRV_INIT_44100HZ_16BIT_2CHANNEL SUCCESS\n");
+	} else {
+		printf("AC102_DRV_INIT_44100HZ_16BIT_2CHANNEL FAIL\n");
+		vTaskDelete(NULL);
+	}
+
+	ret = AC102_START();
+	if (ESP_OK == ret) {
+		printf("AC102_START IS OK\n");
+	} else {
+		printf("AC102_START IS FAIL\n");
+		vTaskDelete(NULL);
+	}
+
 	AC102_TEST();
+
+	vTaskDelete(NULL);
 }
 
